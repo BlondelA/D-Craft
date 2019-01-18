@@ -103,7 +103,7 @@ public class Accueil extends JFrame{
         JPrecherche.setOpaque(false);
         container.add(JPrecherche, BorderLayout.NORTH);
         
-               chercher.addMouseListener(new java.awt.event.MouseAdapter() {
+        chercher.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchMouseClicked(evt);
             }
@@ -162,7 +162,6 @@ public class Accueil extends JFrame{
                 headerMouseClicked(evt);
             }
         });
-        
            
         ////////////////////////////////////////////////////////////////////////
                 
@@ -190,12 +189,13 @@ public class Accueil extends JFrame{
         
         
         this.setVisible(true);
+        
     }
+
     
-    //Quitter
-    private void quitterMouseClicked(java.awt.event.MouseEvent evt) {
-        System.exit(0);
-    }
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
     
     //appuie sur entrer ou cliquer chercher pour trier les idoles
     private void searchBarKeyPressed(java.awt.event.KeyEvent evt){
@@ -225,7 +225,7 @@ public class Accueil extends JFrame{
         //selecteur = "";
         searchBar.setText("");
     }
-    
+
     //ordoner les resultats
     private void headerMouseClicked(java.awt.event.MouseEvent evt) {
         Point point = evt.getPoint();
@@ -249,6 +249,11 @@ public class Accueil extends JFrame{
         bdd.getIdIdole(this, selecteur, orderBy);
     }
     
+    
+    private void quitterMouseClicked(java.awt.event.MouseEvent evt) {
+        System.exit(0);
+    }
+
     //Colorer 1 ligne sur 2 dans le tableau
     public class MyCellRenderer implements TableCellRenderer {
         private TableCellRenderer tcr;

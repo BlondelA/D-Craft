@@ -69,6 +69,8 @@ public class Accueil extends JFrame{
     public ArrayList tableauDynamiqueID = new ArrayList(Arrays.asList(tableauSimpleID));
     public Object[] rowData = new Object[3];
     
+    Dialogue dial;
+    
     public Accueil(){
         container.setLayout(new BorderLayout());                    //Création d'une petite marge en haut du JPtable
         this.setTitle("Dofus Craft");                               //Titre de la fenettre
@@ -162,6 +164,12 @@ public class Accueil extends JFrame{
                 headerMouseClicked(evt);
             }
         });
+        
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
            
         ////////////////////////////////////////////////////////////////////////
                 
@@ -249,6 +257,22 @@ public class Accueil extends JFrame{
         bdd.getIdIdole(this, selecteur, orderBy);
     }
     
+    //ouvrir la recette de l'idole cliquée
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {
+
+        int ligneSelectionne = table.getSelectedRow();
+        
+        IDidole = table.getValueAt(ligneSelectionne, 0).toString();
+        NOMidole = table.getValueAt(ligneSelectionne, 1).toString();
+        
+        try{
+            dial.dispose();
+        }catch(Exception e){
+           System.out.println("pas ouvert");
+        };
+        
+        dial = new Dialogue(IDidole, NOMidole);
+    }
     
     private void quitterMouseClicked(java.awt.event.MouseEvent evt) {
         System.exit(0);

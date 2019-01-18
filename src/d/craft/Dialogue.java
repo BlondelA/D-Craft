@@ -14,7 +14,7 @@ public class Dialogue extends javax.swing.JFrame {
     /**
      * Creates new form Dialogue
      */
-    public Dialogue() {
+    public Dialogue(String IDidole, String NOMidole) {
         initComponents();
     }
 

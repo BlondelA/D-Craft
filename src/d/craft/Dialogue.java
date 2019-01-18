@@ -14,6 +14,12 @@ public class Dialogue extends javax.swing.JFrame {
     /**
      * Creates new form Dialogue
      */
+    
+    String strIngr[] = {"", "", "", ""};
+    String strNbre[] = {"", "", "", ""};
+    String strType[] = {"","","",""};
+    String IdIdole = "";
+    
     public Dialogue(String IDidole, String NOMidole) {
         initComponents();
     }

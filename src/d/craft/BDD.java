@@ -82,4 +82,47 @@ public class BDD {
         
     }
     
+    //Récupérer la recette
+    public ResultSet getRecette(Dialogue dial){
+      
+        dial = dial;
+        
+        try{
+        Statement stm = conn.createStatement(); 
+        Recette = stm.executeQuery("SELECT * FROM ressource_idole WHERE ID_idle ="+dial.IdIdole);
+        System.out.println(Recette);
+        //dial.model.getDataVector().clear();
+        
+        String ID = "";
+        String Nbre = "";
+        int x = 0;
+        
+            while (Recette.next()){ 
+//                BDD bdd = new BDD();
+//                bdd.getConnection();
+                ID = Recette.getString("ID_Ress");
+                Nbre = Recette.getString("nbre"); 
+//                bdd.getRessource(ID, x);
+                
+                //Retrouver le nom et le type
+                stm = conn.createStatement();
+                Ressource = stm.executeQuery("SELECT * FROM ressource WHERE ID_ress =" + ID);
+                System.out.println(Ressource);
+               
+                //Ecrire les données
+                while (Ressource.next()){ 
+                    dial.strIngr[x] = Ressource.getString("Nom_ress");
+                    dial.strNbre[x] = Nbre;
+                    dial.strType[x] = Ressource.getString("Type_ress");
+                }
+                
+            x = x+1;
+            }
+        }
+        catch (SQLException ex) { 
+            System.out.println ("Erreur ta mère");            
+            ex.printStackTrace();        
+        }
+        return Idole;
+    }
 }

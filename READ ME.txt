@@ -1,0 +1,34 @@
+-----------------------------------------------------------
+-------------------------D-CRAFT---------------------------
+-----------------------------------------------------------
+
+author   : Blondel Antoine
+Date     : 18/01/2019
+Language : JAVA
+
+-----------------------------------------------------------
+---FR------------------------------------------------------
+-----------------------------------------------------------
+
+V1.0 :
+
+Logiciel permettant de récupérer les recettes de craft de toutes les idoles
+du jeu DOFUS
+	- Connexion à une base de donnée MySQL
+	- Affichage de toutes les Idoles (items)
+	- Affichage des recettes de chaques Idoles
+	- Compteur de ressources necessaires
+
+
+-----------------------------------------------------------
+---EN------------------------------------------------------
+-----------------------------------------------------------
+
+V1.0 :
+
+Software to recover the craft recipes of all idols
+of the game DOFUS
+	- Connection to a MySQL database
+	- Display of all Idols (items)
+	- Display recipes for each Idols
+	- Resource counter needed

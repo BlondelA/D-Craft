@@ -10,7 +10,9 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.BorderFactory;
@@ -101,6 +103,22 @@ public class Accueil extends JFrame{
         JPrecherche.setOpaque(false);
         container.add(JPrecherche, BorderLayout.NORTH);
         
+               chercher.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchMouseClicked(evt);
+            }
+        });
+        searchBar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchBarKeyPressed(evt);
+            }
+        });
+        levelBar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchBarKeyPressed(evt);
+            }
+        });
+        
         
         ////////////////////////////////////////////////////////////////////////
         
@@ -138,6 +156,13 @@ public class Accueil extends JFrame{
         JPtable.setOpaque(false);
         
         container.add(JPtable, BorderLayout.CENTER);
+        
+        header.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                headerMouseClicked(evt);
+            }
+        });
+        
            
         ////////////////////////////////////////////////////////////////////////
                 
@@ -149,6 +174,11 @@ public class Accueil extends JFrame{
         JPquitter.add(quitter);
         JPquitter.setOpaque(false);
         container.add(JPquitter, BorderLayout.SOUTH);
+        quitter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                quitterMouseClicked(evt);
+            }
+        });
         
         this.getContentPane().add(container);
         
@@ -160,6 +190,63 @@ public class Accueil extends JFrame{
         
         
         this.setVisible(true);
+    }
+    
+    //Quitter
+    private void quitterMouseClicked(java.awt.event.MouseEvent evt) {
+        System.exit(0);
+    }
+    
+    //appuie sur entrer ou cliquer chercher pour trier les idoles
+    private void searchBarKeyPressed(java.awt.event.KeyEvent evt){
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+        search();        
+        }
+    }
+    private void searchMouseClicked(java.awt.event.MouseEvent evt) {
+        search();
+    }
+    private void search(){
+        orderBy = "";
+        
+        if (levelBar.getText().isEmpty()){
+            levelBar.setText("200");
+        }
+        
+        if (searchBar.getText().isEmpty()){
+           selecteur = " WHERE Lvl_idle <= " + levelBar.getText();
+        }else{
+           selecteur = " WHERE Nom_idle LIKE \'%" + searchBar.getText() +"%\' AND Lvl_idle <= " + levelBar.getText();
+        };
+        
+        BDD bdd = new BDD();
+        bdd.getConnection();
+        bdd.getIdIdole(this, selecteur, orderBy);
+        //selecteur = "";
+        searchBar.setText("");
+    }
+    
+    //ordoner les resultats
+    private void headerMouseClicked(java.awt.event.MouseEvent evt) {
+        Point point = evt.getPoint();
+        int column = table.columnAtPoint(point);
+        if (column == 1){
+            if(orderBy.contains("Nom_idle DESC") || (orderBy=="")){
+                orderBy = " ORDER BY Nom_idle ASC";
+            }else{
+                orderBy = " ORDER BY Nom_idle DESC";
+            }
+        }else{
+            if(orderBy.contains("Lvl_idle DESC") || (orderBy=="")){
+                orderBy = " ORDER BY Lvl_idle ASC";
+            }else{
+                orderBy = " ORDER BY Lvl_idle DESC";
+            }
+        };
+        
+        BDD bdd = new BDD();
+        bdd.getConnection();
+        bdd.getIdIdole(this, selecteur, orderBy);
     }
     
     //Colorer 1 ligne sur 2 dans le tableau

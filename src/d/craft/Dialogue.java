@@ -40,6 +40,9 @@ public class Dialogue extends javax.swing.JFrame {
         ((DefaultEditor) jSpinner1.getEditor()).getTextField().setEditable(false);
         jSpinner1.setUI(new MySpinnerUI());
         
+        this.setIconImage(new ImageIcon(getClass().getResource
+            ("/Ressources/logoDofus.png")).getImage());
+        
         IdIdole = IDidole;
         
         BDD bdd = new BDD();

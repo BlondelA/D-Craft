@@ -80,10 +80,10 @@ public class Accueil extends JFrame{
         container.setSize(600,700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);        //Ferme le programme quand on ferme la fenettre
         
-        //container.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ressources/Wallpaper.png")));
         container.setOpaque(true);
         container.setBackground(new Color(201,191,156)); 
-        
+                this.setIconImage(new ImageIcon(getClass().getResource
+            ("/Ressources/logoDofus.png")).getImage());           //Utiliser une image comme icon
 
         //Barre de JPrecherche
 

@@ -69,6 +69,8 @@ public class Accueil extends JFrame{
     public ArrayList tableauDynamiqueID = new ArrayList(Arrays.asList(tableauSimpleID));
     public Object[] rowData = new Object[3];
     
+    Dialogue dial;
+    
     public Accueil(){
         container.setLayout(new BorderLayout());                    //Création d'une petite marge en haut du JPtable
         this.setTitle("Dofus Craft");                               //Titre de la fenettre
@@ -103,7 +105,7 @@ public class Accueil extends JFrame{
         JPrecherche.setOpaque(false);
         container.add(JPrecherche, BorderLayout.NORTH);
         
-               chercher.addMouseListener(new java.awt.event.MouseAdapter() {
+        chercher.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchMouseClicked(evt);
             }
@@ -163,6 +165,11 @@ public class Accueil extends JFrame{
             }
         });
         
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
            
         ////////////////////////////////////////////////////////////////////////
                 
@@ -190,12 +197,13 @@ public class Accueil extends JFrame{
         
         
         this.setVisible(true);
+        
     }
+
     
-    //Quitter
-    private void quitterMouseClicked(java.awt.event.MouseEvent evt) {
-        System.exit(0);
-    }
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
     
     //appuie sur entrer ou cliquer chercher pour trier les idoles
     private void searchBarKeyPressed(java.awt.event.KeyEvent evt){
@@ -225,7 +233,7 @@ public class Accueil extends JFrame{
         //selecteur = "";
         searchBar.setText("");
     }
-    
+
     //ordoner les resultats
     private void headerMouseClicked(java.awt.event.MouseEvent evt) {
         Point point = evt.getPoint();
@@ -249,6 +257,27 @@ public class Accueil extends JFrame{
         bdd.getIdIdole(this, selecteur, orderBy);
     }
     
+    //ouvrir la recette de l'idole cliquée
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {
+
+        int ligneSelectionne = table.getSelectedRow();
+        
+        IDidole = table.getValueAt(ligneSelectionne, 0).toString();
+        NOMidole = table.getValueAt(ligneSelectionne, 1).toString();
+        
+        try{
+            dial.dispose();
+        }catch(Exception e){
+           System.out.println("pas ouvert");
+        };
+        
+        dial = new Dialogue(IDidole, NOMidole);
+    }
+    
+    private void quitterMouseClicked(java.awt.event.MouseEvent evt) {
+        System.exit(0);
+    }
+
     //Colorer 1 ligne sur 2 dans le tableau
     public class MyCellRenderer implements TableCellRenderer {
         private TableCellRenderer tcr;

@@ -80,6 +80,9 @@ public class Accueil extends JFrame{
     Dialogue dial;
     
     public Accueil() throws SQLException{
+        
+        javax.swing.UIManager.put("ScrollBar.thumb", new javax.swing.plaf.ColorUIResource(81,73,60));
+        
         container.setLayout(new BorderLayout());                    //Création d'une petite marge en haut du JPtable
         this.setTitle("Dofus Craft");                               //Titre de la fenettre
         this.setSize(600, 700);                                     //Taille par défaut de la fenettre
@@ -157,6 +160,7 @@ public class Accueil extends JFrame{
         
         JScrollPane jsp = new JScrollPane(table);
         jsp.getVerticalScrollBar().setUI(new MyScrollBarUI());
+
         jsp.setBackground(new Color(60,49,47,51));
         jsp.setOpaque(false);
         jsp.getViewport().setOpaque(false);

@@ -55,7 +55,6 @@ public class BDD {
         stm = connection.createStatement();
         rs = stm.executeQuery("SELECT * FROM idole" + selecteur + orderBy);
         
-        System.out.println(rs);
         String id = "";
         String nom = "";
         String lvl = "";
@@ -106,7 +105,7 @@ public class BDD {
                 
                 //Retrouver le nom et le type
                 Ressource = stm.executeQuery("SELECT * FROM ressource WHERE ID_ress =" + ID);
-                //System.out.println(Ressource);
+                System.out.println(Ressource);
                
                 //Ecrire les données
                 while (Ressource.next()){ 
@@ -975,7 +974,7 @@ public class BDD {
             
             connection.commit();
         } catch (SQLException e) {
-            System.out.println("Exception Message " + e.getLocalizedMessage());
+            System.out.println(e.getLocalizedMessage());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

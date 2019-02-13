@@ -13,8 +13,11 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -53,7 +56,12 @@ public class Accueil extends JFrame{
     public JFormattedTextField levelBar = new JFormattedTextField();
     
     public JTable table = new JTable();
-    public DefaultTableModel model = new DefaultTableModel();
+    //public DefaultTableModel model = new DefaultTableModel();
+    DefaultTableModel model = new DefaultTableModel() {
+		public boolean isCellEditable(int row, int col) {
+			return false;
+		};
+	};
      
     public String insertID;
     public String insertNAME;
@@ -71,7 +79,7 @@ public class Accueil extends JFrame{
     
     Dialogue dial;
     
-    public Accueil(){
+    public Accueil() throws SQLException{
         container.setLayout(new BorderLayout());                    //Création d'une petite marge en haut du JPtable
         this.setTitle("Dofus Craft");                               //Titre de la fenettre
         this.setSize(600, 700);                                     //Taille par défaut de la fenettre
@@ -140,7 +148,6 @@ public class Accueil extends JFrame{
         table.setForeground(Color.BLACK);
         
         table.setDefaultRenderer(Object.class, new MyCellRenderer(table.getDefaultRenderer(Object.class)));
-
         
         JTableHeader header = table.getTableHeader();
         header.setBackground(new Color(81,73,60));
@@ -161,7 +168,11 @@ public class Accueil extends JFrame{
         
         header.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                headerMouseClicked(evt);
+                try {
+                    headerMouseClicked(evt);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         
@@ -190,7 +201,6 @@ public class Accueil extends JFrame{
         this.getContentPane().add(container);
         
         BDD bdd = new BDD();
-        bdd.getConnection();
         bdd.getIdIdole(this, selecteur, orderBy);
         
         table.selectAll();
@@ -224,18 +234,21 @@ public class Accueil extends JFrame{
         if (searchBar.getText().isEmpty()){
            selecteur = " WHERE Lvl_idle <= " + levelBar.getText();
         }else{
-           selecteur = " WHERE Nom_idle LIKE \'%" + searchBar.getText() +"%\' AND Lvl_idle <= " + levelBar.getText();
+           selecteur = " WHERE UPPER(Nom_idle) LIKE (UPPER(\'%" + searchBar.getText() +"%\')) AND Lvl_idle <= " + levelBar.getText();
         };
         
         BDD bdd = new BDD();
-        bdd.getConnection();
-        bdd.getIdIdole(this, selecteur, orderBy);
+        try {
+            bdd.getIdIdole(this, selecteur, orderBy);
+        } catch (SQLException ex) {
+            Logger.getLogger(Accueil.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //selecteur = "";
         searchBar.setText("");
     }
 
     //ordoner les resultats
-    private void headerMouseClicked(java.awt.event.MouseEvent evt) {
+    private void headerMouseClicked(java.awt.event.MouseEvent evt) throws SQLException {
         Point point = evt.getPoint();
         int column = table.columnAtPoint(point);
         if (column == 1){
@@ -253,7 +266,6 @@ public class Accueil extends JFrame{
         };
         
         BDD bdd = new BDD();
-        bdd.getConnection();
         bdd.getIdIdole(this, selecteur, orderBy);
     }
     

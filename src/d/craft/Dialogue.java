@@ -46,14 +46,12 @@ public class Dialogue extends javax.swing.JFrame {
         IdIdole = IDidole;
         
         BDD bdd = new BDD();
-        bdd.getConnection();
         bdd.getRecette(this);
         
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setTitle("Recette de " + NOMidole);
         JLnomIdole.setText(NOMidole + "  x");
         setResizable(false);
-        setVisible(true);
         
         Ingr1.setText(strIngr[0]);
         Ingr2.setText(strIngr[1]);
@@ -70,6 +68,7 @@ public class Dialogue extends javax.swing.JFrame {
         Type3.setText(strType[2]);
         Type4.setText(strType[3]);
         
+        setVisible(true);
     }
 
     /**
